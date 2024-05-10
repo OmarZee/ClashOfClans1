@@ -9,7 +9,12 @@
 #include<QDebug>
 #include<QPixmap>
 #include<QGraphicsPixmapItem>
+#include <QGraphicsTextItem>
 #include"clan.h"
+#include"gameovermenu.h"
+#include"ui_gameovermenu.h"
+#include"congratulationsmenu.h"
+#include"ui_congratulationsmenu.h"
 
 /*void Enemy::hit_fence(){
     Fence::decHealth();
@@ -48,18 +53,52 @@ void Enemy::goToClanRight(){
     if(x()<=220 && y()>300){
         setPos(x()+4,y()-4);
     }
+    /*QGraphicsTextItem* health = new QGraphicsTextItem();*/ // Create new health display
     QList<QGraphicsItem*> colliding_itemsClan = collidingItems();
     for(int i = 0; i < colliding_itemsClan.size(); i++){
         if(typeid(*(colliding_itemsClan[i])) == typeid(Clan))
         {
+
             clanCollision = true;
             Clan::counter++;
             setPos(x(),y());
-            hit_clan();
-            qDebug() << "Clan healh:";
+             if(Clan::clan_health != 0)
+             {
+    //             health->setPos(225, 325);
+    //             scene()->addItem(health); // Add health to the correct scene
+    //             }
+    //         if (scene() && health->scene() != scene()) { // Check if health is in the correct scene
+    //                 scene()->addItem(health); // Add health to the correct scene
+    //             }
+    //         health->setPlainText(QString("Health: ") + QString::number(Clan::clan_health));
+                 hit_clan();
+            }
+    //     if(Clan::clan_health <= 0){ // Check if health exists and health is non-positive
+    //             if (scene()) { // Check if scene exists
+
+    //             scene()->removeItem(health);
+    //             scene()->removeItem(this);
+    //             } else {
+    //                 qDebug() << "Enemy scene is null";
+    //             }
+    //             delete health;
+    //             //arr[0] = nullptr; // Set arr[0] to null pointer after deletion
+            }
+            if(Clan::clan_health == 0 && !Clan::end_of_time && scene()){
+                scene()->removeItem(colliding_itemsClan[i]);
+                scene()->clear();
+                GameOverMenu* gameover_menu = new GameOverMenu();
+                gameover_menu->show();
+            }
+            else if (!(Clan::clan_health == 0) && Clan::end_of_time && scene()){
+                scene()->clear();
+                CongratulationsMenu* congrats_menu = new CongratulationsMenu();
+                congrats_menu->show();
+            }
+            qDebug() << "Clan health:" << Clan::clan_health;
         }
-    }
-}
+  }
+
 void Enemy::goToClanLeft(){
     if(x()>=250 && y()<=300){
         setPos(x()-5.5,y()+3);
@@ -74,12 +113,44 @@ void Enemy::goToClanLeft(){
     for(int i = 0; i < colliding_itemsClan.size(); i++){
         if(typeid(*(colliding_itemsClan[i])) == typeid(Clan))
         {
+
             clanCollision = true;
             Clan::counter++;
             setPos(x(),y());
-            hit_clan();
-            qDebug() << "Clan healh:";
+            if(Clan::clan_health != 0)
+            {
+                //             health->setPos(225, 325);
+                //             scene()->addItem(health); // Add health to the correct scene
+                //             }
+                //         if (scene() && health->scene() != scene()) { // Check if health is in the correct scene
+                //                 scene()->addItem(health); // Add health to the correct scene
+                //             }
+                //         health->setPlainText(QString("Health: ") + QString::number(Clan::clan_health));
+                hit_clan();
+            }
+            //     if(Clan::clan_health <= 0){ // Check if health exists and health is non-positive
+            //             if (scene()) { // Check if scene exists
+
+            //             scene()->removeItem(health);
+            //             scene()->removeItem(this);
+            //             } else {
+            //                 qDebug() << "Enemy scene is null";
+            //             }
+            //             delete health;
+            //             //arr[0] = nullptr; // Set arr[0] to null pointer after deletion
         }
+        if(Clan::clan_health == 0 && !Clan::end_of_time && scene()){
+            scene()->removeItem(colliding_itemsClan[i]);
+            scene()->clear();
+            GameOverMenu* gameover_menu = new GameOverMenu();
+            gameover_menu->show();
+        }
+        else if (!(Clan::clan_health == 0) && Clan::end_of_time && scene()){
+            scene()->clear();
+            CongratulationsMenu* congrats_menu = new CongratulationsMenu();
+            congrats_menu->show();
+        }
+        qDebug() << "Clan health:" << Clan::clan_health;
     }
 }
 void Enemy::goToClanUp(){
@@ -99,9 +170,40 @@ void Enemy::goToClanUp(){
             clanCollision = true;
             Clan::counter++;
             setPos(x(),y());
-            hit_clan();
-            qDebug() << "Clan healh:" << Clan::clan_health;
+            if(Clan::clan_health != 0)
+            {
+                //             health->setPos(225, 325);
+                //             scene()->addItem(health); // Add health to the correct scene
+                //             }
+                //         if (scene() && health->scene() != scene()) { // Check if health is in the correct scene
+                //                 scene()->addItem(health); // Add health to the correct scene
+                //             }
+                //         health->setPlainText(QString("Health: ") + QString::number(Clan::clan_health));
+                hit_clan();
+            }
+            //     if(Clan::clan_health <= 0){ // Check if health exists and health is non-positive
+            //             if (scene()) { // Check if scene exists
+
+            //             scene()->removeItem(health);
+            //             scene()->removeItem(this);
+            //             } else {
+            //                 qDebug() << "Enemy scene is null";
+            //             }
+            //             delete health;
+            //             //arr[0] = nullptr; // Set arr[0] to null pointer after deletion
         }
+        if(Clan::clan_health == 0 && !Clan::end_of_time && scene()){
+            scene()->removeItem(colliding_itemsClan[i]);
+            scene()->clear();
+            GameOverMenu* gameover_menu = new GameOverMenu();
+            gameover_menu->show();
+        }
+        else if (!(Clan::clan_health == 0) && Clan::end_of_time && scene()){
+            scene()->clear();
+            CongratulationsMenu* congrats_menu = new CongratulationsMenu();
+            congrats_menu->show();
+        }
+        qDebug() << "Clan health:" << Clan::clan_health;
     }
 }
 void Enemy::goToClanDown(){
@@ -589,4 +691,3 @@ Enemy::Enemy(Fence** arr):arr(arr) {
     }*/
 
 }
-

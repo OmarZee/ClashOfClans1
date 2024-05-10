@@ -11,8 +11,10 @@ CONFIG += c++17
 SOURCES += \
     bullet.cpp \
     clan.cpp \
+    congratulationsmenu.cpp \
     enemy.cpp \
     fence.cpp \
+    gameovermenu.cpp \
     main.cpp \
     player.cpp \
     worker.cpp
@@ -20,12 +22,16 @@ SOURCES += \
 HEADERS += \
     bullet.h \
     clan.h \
+    congratulationsmenu.h \
     enemy.h \
     fence.h \
+    gameovermenu.h \
     player.h \
     worker.h
 
-FORMS +=
+FORMS += \
+    congratulationsmenu.ui \
+    gameovermenu.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -64,30 +64,48 @@ int main(int argc, char *argv[])
         qDebug() << "Node position:" << node.position << "Is clan node:" << node.isClanNode;
     }
 
+    // Create scene
+    QGraphicsScene scene;
+
     // Create Clan
-    Clan *clan = new Clan();
-    clan->setRect(250, 300, 50, 50);
+    Clan *clan = new Clan(&scene);
+    //clan->setRect(250, 300, 50, 50);
+   //  // Fences
+   //  Fence *LeftFence = new Fence(400, 350);
+   //  LeftFence->setRect(150, 50, 50, 400);
+   // // LeftFence->Display();
+   //  Fence *RightFence = new Fence(400, 350);
+   //  RightFence->setRect(400, 50, 50, 400);
+   // // RightFence->Display();
+   //  Fence *TopFence = new Fence(400, 350);
+   //  TopFence->setRect(200, 50, 200, 50);
+   // // TopFence->Display();
+   //  Fence *BottomFence = new Fence(400, 350);
+   //  BottomFence->setRect(200, 400, 200, 50);
+   // // BottomFence->Display();
+
     // Fences
-    Fence *LeftFence = new Fence(400, 350);
-    LeftFence->setRect(150, 50, 50, 400);
-   // LeftFence->Display();
-    Fence *RightFence = new Fence(400, 350);
-    RightFence->setRect(400, 50, 50, 400);
-   // RightFence->Display();
-    Fence *TopFence = new Fence(400, 350);
-    TopFence->setRect(200, 50, 200, 50);
-   // TopFence->Display();
-    Fence *BottomFence = new Fence(400, 350);
-    BottomFence->setRect(200, 400, 200, 50);
-   // BottomFence->Display();
+    //Fence *LeftFence = new Fence(400, 350, &scene, 50, 400);
+    Fence *LeftFence = new Fence(140, -47, &scene, 70, 556);
+    //LeftFence->setRect(150, 50, 50, 400);
+    // LeftFence->Display();
+    //Fence *RightFence = new Fence(400, 350, &scene, 50, 400);
+    Fence *RightFence = new Fence(390, -47, &scene, 70, 556);
+    //RightFence->setRect(400, 50, 50, 400);
+    // RightFence->Display();
+    // Fence *TopFence = new Fence(400, 350, &scene, 200, 50);
+    Fence *TopFence = new Fence(150, 38, &scene, 300, 70);
+    //TopFence->setRect(200, 50, 200, 50);
+    // TopFence->Display();
+    Fence *BottomFence = new Fence(150, 388, &scene, 300, 70);
+    //BottomFence->setRect(200, 400, 200, 50);
+    // BottomFence->Display();
 
     // Array of fences
     Fence* arr[4] = {LeftFence, RightFence, TopFence, BottomFence};/*{ fence1, fence2, fence3, fence4, fence5, fence6, fence7, fence8, fence9, fence10, fence11, fence12,
                       fence13, fence14, fence15, fence16, fence17,fence18, fence19, fence20, fence21, fence22, fence23, fence24};*/
 
 
-    // Create scene
-    QGraphicsScene scene;
     // Create Player (Cannon)
 
     //player->setRect(250, 200, 50, 50);
@@ -181,6 +199,21 @@ int main(int argc, char *argv[])
     QTimer *time_worker4 = new QTimer();
     QObject::connect(time_worker4, SIGNAL(timeout()),worker4,SLOT(moveWorker4()));
     time_worker4->start(30);
+
+    // Create a QTimer object
+    QTimer timer;
+
+    // Set the interval to 5 minutes (300,000 milliseconds)
+    timer.setInterval(0.1 * 60 * 1000); // 5 minutes * 60 seconds * 1000 milliseconds
+
+    // Connect the timeout signal of the timer to a lambda function
+    QObject::connect(&timer, &QTimer::timeout, [&]() {
+        qDebug() << "Time's up!";
+        Clan::end_of_time = true;
+    });
+
+    // Start the timer
+    timer.start();
 
     view.show();
     // Start w;

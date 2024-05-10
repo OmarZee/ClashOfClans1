@@ -17,7 +17,7 @@ bool Player::Right = false;
 bool Player::Left = false;
 bool Player::Up = false;
 bool Player::Down = false;
-
+bool Player::started = false;
 
 
 void Player::createEnemy(){
@@ -27,6 +27,7 @@ void Player::createEnemy(){
 }
 
 void Player::keyPressEvent(QKeyEvent *event) {
+    qDebug() << "Player key press event:" << event->key();
     if (event->key() == Qt::Key_Left) {
         setRotation(rotation() - 5);
         angle= angle-5;
@@ -51,6 +52,3 @@ void Player::keyPressEvent(QKeyEvent *event) {
         scene()->addItem(bullet);
     }
 }
-
-
-

@@ -24,10 +24,16 @@ void Fence::set_hit(){
 int Fence::health = 100;
 bool Fence::is_hit = false;
 
-Fence::Fence(int x, int y):x(x),y(y) {
+Fence::Fence(int x, int y, QGraphicsScene* scene, int w, int l):x(x),y(y),w(w),l(l) {
     /*QTimer * time1 = new QTimer();
     QObject::connect(time1, SIGNAL(timeout()),this,SLOT(Display()));
     time1->start(1000);*/
+
+    QPixmap fencePixmap("C:/Users/omars/OneDrive/Desktop/Uni/AUC/Semester 6/CS II/Project/ClashOfClans1/Images/wall6.png");
+    setPixmap(fencePixmap.scaled(w, l));
+    setPos(x, y);
+    scene->addItem(this);
+    qDebug() << "Fence pixmap";
 }
 /*void Fence::Display()
 {
@@ -107,8 +113,5 @@ Fence::Fence(int x, int y):x(x),y(y) {
         health_display->setDefaultTextColor(Qt::red);
         health_display->setPos(x, y);
         scene()->addItem(health_display); // Add the updated health display
-    }*/
+    }*/
 //}
-
-
-
