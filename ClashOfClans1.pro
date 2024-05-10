@@ -15,6 +15,7 @@ SOURCES += \
     enemy.cpp \
     fence.cpp \
     gameovermenu.cpp \
+    levels.cpp \
     main.cpp \
     player.cpp \
     worker.cpp
@@ -26,6 +27,7 @@ HEADERS += \
     enemy.h \
     fence.h \
     gameovermenu.h \
+    levels.h \
     player.h \
     worker.h
 

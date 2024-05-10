@@ -43,6 +43,7 @@ void Enemy::hit_clan(){
     Clan::clan_health -= 1;
 }
 
+
 void Enemy::goToClanRight(){
     if(x()<=225 && y()<=300){
         setPos(x()+5,y()+4);
@@ -296,9 +297,10 @@ void Enemy::move_right() {
 
     }
     if (health && scene()) { // Check if health item exists and scene exists
-        scene()->removeItem(health); // Remove previous health display if no collision
-        delete health; // Delete previous health display
+
         health = nullptr; // Reset health pointer
+        delete health; // Delete previous health display
+        scene()->removeItem(health); // Remove previous health display if no collision
     }
     QList<QGraphicsItem*> colliding_itemsworker1 = collidingItems();
     for(int i = 0; i < colliding_itemsworker1.size(); i++){
@@ -372,9 +374,10 @@ void Enemy::move_left(){
         }
     }
     if (health2 && scene()) { // Check if health item exists and scene exists
-        scene()->removeItem(health2); // Remove previous health display if no collision
-        delete health2; // Delete previous health display
+
         health2 = nullptr; // Reset health pointer
+        delete health2; // Delete previous health display
+        scene()->removeItem(health2); // Remove previous health display if no collision
     }
     QList<QGraphicsItem*> colliding_itemsworker2 = collidingItems();
     for(int i = 0; i < colliding_itemsworker2.size(); i++){
@@ -440,9 +443,10 @@ void Enemy::move_up(){
         }
     }
     if (health3 && scene()) { // Check if health item exists and scene exists
-        scene()->removeItem(health3); // Remove previous health display if no collision
-        delete health3; // Delete previous health display
+
         health3 = nullptr; // Reset health pointer
+        delete health3; // Delete previous health display
+        scene()->removeItem(health3); // Remove previous health display if no collision
     }
     QList<QGraphicsItem*> colliding_itemsworker3 = collidingItems();
     for(int i = 0; i < colliding_itemsworker3.size(); i++){
@@ -507,9 +511,10 @@ void Enemy::move_down(){
         }
     }
     if (health4 && scene()) { // Check if health item exists and scene exists
-        scene()->removeItem(health4); // Remove previous health display if no collision
-        delete health4; // Delete previous health display
+
         health4 = nullptr; // Reset health pointer
+        delete health4; // Delete previous health display
+        scene()->removeItem(health4); // Remove previous health display if no collision
     }
     QList<QGraphicsItem*> colliding_itemsworker4 = collidingItems();
     for(int i = 0; i < colliding_itemsworker4.size(); i++){
@@ -602,6 +607,7 @@ Enemy::Enemy(Fence** arr):arr(arr) {
 
     // // Decide which way to move
     if(x() == 0 && !Player::Right){
+        if(!Clan::end_of_time){
         // move right
         QTimer * timer = new QTimer();
         connect(timer, SIGNAL(timeout()),this,SLOT (move_right()));
@@ -609,14 +615,17 @@ Enemy::Enemy(Fence** arr):arr(arr) {
         if(Player::Right){
             timer->stop();
         }
+        }
     }
     if(x() == 550 && !Player::Left){
+        if(!Clan::end_of_time){
         // move left
         QTimer * timer = new QTimer();
         connect(timer, SIGNAL(timeout()),this,SLOT (move_left()));
         timer->start(50);
         if(Player::Left){
             timer->stop();
+        }
         }
     }
     // if(arr_decider == 6 && final_random == 0 && !Player::Down){
@@ -629,6 +638,7 @@ Enemy::Enemy(Fence** arr):arr(arr) {
     //     }
     // }
     if(y() == 500 && !Player::Up){
+        if(!Clan::end_of_time){
         // move up
         QTimer * timer = new QTimer();
         connect(timer, SIGNAL(timeout()),this,SLOT (move_up()));
@@ -636,9 +646,11 @@ Enemy::Enemy(Fence** arr):arr(arr) {
         if(Player::Up){
             timer->stop();
         }
+        }
     }
 
     if(Player::Right){
+        if(!Clan::end_of_time){
         QTimer * timer = new QTimer();
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), this, SLOT(goToClanRight()));
@@ -646,8 +658,10 @@ Enemy::Enemy(Fence** arr):arr(arr) {
         if(clanCollision){
             timer->stop();
         }
+        }
     }
     if(Player::Left){
+        if(!Clan::end_of_time){
         QTimer * timer = new QTimer();
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), this, SLOT(goToClanLeft()));
@@ -655,8 +669,10 @@ Enemy::Enemy(Fence** arr):arr(arr) {
         if(clanCollision){
             timer->stop();
         }
+        }
     }
     if(Player::Up){
+        if(!Clan::end_of_time){
         QTimer * timer = new QTimer();
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), this, SLOT(goToClanUp()));
@@ -664,15 +680,19 @@ Enemy::Enemy(Fence** arr):arr(arr) {
         if(clanCollision){
             timer->stop();
         }
+        }
     }
     if(Player::Down){
+      if(!Clan::end_of_time){
         QTimer * timer = new QTimer();
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), this, SLOT(goToClanLDown()));
         timer->start(50);
+        qDebug() << "Clan collision down: " << clanCollision;
         if(clanCollision){
             timer->stop();
         }
+     }
     }
 
    /* while (is_hit = true && arr[0]->getHealth() > 0){
